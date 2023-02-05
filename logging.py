@@ -1,9 +1,13 @@
 # ? https://realpython.com/python-logging/
+# ? https://note.nkmk.me/en/python-script-file-path/
 
 import logging
+import os
 
 logging.basicConfig(
-    filename='logs/log_file_name.log'
+    # ! '../logs/log_file_name.log' will make `logs` one dir back.
+    # filename=os.path.join(os.path.dirname(__file__), 'logs/log_file_name.log')    # Py 3.9 onwards always returns absolute path.
+    filename=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs/log_file_name.log')    # Py 3.8 or earlier returns relative or absolute path if its provided while running the .py file.
     , filemode='a'
     # , format='[%(asctime)s.%(msecs)d] %(levelname)s [%(name)s:%(lineno)s] [%(module)s.%(funcName)s] [%(process)d.%(thread)d] %(message)s'
     , format='[%(asctime)s.%(msecs)d] %(levelname)s [%(name)s:%(lineno)s] [%(module)s.%(funcName)s] ===> %(message)s'
