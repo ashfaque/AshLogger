@@ -15,8 +15,9 @@ class AshLogger:
 
             ''' Creates the `logs` dir at `file_path` '''
             file_location = os.path.join(os.path.dirname(self.file_path), 'logs')
-            if not os.path.exists(file_location):
-                os.makedirs(file_location)
+
+        if not os.path.exists(file_location):
+            os.makedirs(file_location)
 
         self.file_name = file_name
         self.file_location = file_location
@@ -54,8 +55,9 @@ class AshLogger:
 
             ''' Create the `logs` dir at `file_path` '''
             file_location = os.path.join(os.path.dirname(file_path), 'logs')
-            if not os.path.exists(file_location):
-                os.makedirs(file_location)
+
+        if not os.path.exists(file_location):
+            os.makedirs(file_location)
 
         logging.basicConfig(
             # * '../logs/log_file_name.log' will make `logs` one dir back.
