@@ -37,16 +37,20 @@ class AshLogger:
         logger.addHandler(logging.StreamHandler())
         return logger
 
-    @classmethod
-    def setup_basic_logger(self, file_name : str = 'AshBasicLogger.log', file_location : str = None) -> object:
+    # @classmethod
+    # def setup_basic_logger(cls, file_name : str = 'AshBasicLogger.log', file_location : str = None) -> object:
+    @staticmethod
+    def setup_basic_logger(file_name : str = 'AshBasicLogger.log', file_location : str = None) -> object:
         ''' It only logs in a file '''
+
+        ''' This will take path of the calling python file '''
+        calling_frame = inspect.currentframe().f_back
+        file_path = inspect.getfile(calling_frame)
 
         if not file_location:
             # file_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
-            ''' This will take path of the calling python file and creates the `logs` dir there '''
-            calling_frame = inspect.currentframe().f_back
-            file_path = inspect.getfile(calling_frame)
 
+            ''' Create the `logs` dir at `file_path` '''
             file_location = os.path.join(os.path.dirname(file_path), 'logs')
             if not os.path.exists(file_location):
                 os.makedirs(file_location)
