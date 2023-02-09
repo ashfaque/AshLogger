@@ -6,12 +6,14 @@ import inspect
 
 class AshLogger:
     def __init__(self, file_name : str = 'AshLogger.log', file_location : str = None, max_bytes : int = 1000000 , max_backups : int = 1):
+        ''' This will take path of the calling python file '''
+        calling_frame = inspect.currentframe().f_back
+        self.file_path = inspect.getfile(calling_frame)
+
         if not file_location:
             # file_location = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')    # This will take the path of this file, which we do not want, as it will create the `logs` dir in the python package dir.
-            ''' This will take path of the calling python file and creates the `logs` dir there '''
-            calling_frame = inspect.currentframe().f_back
-            self.file_path = inspect.getfile(calling_frame)
 
+            ''' Creates the `logs` dir at `file_path` '''
             file_location = os.path.join(os.path.dirname(self.file_path), 'logs')
             if not os.path.exists(file_location):
                 os.makedirs(file_location)
