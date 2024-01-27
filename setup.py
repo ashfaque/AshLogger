@@ -35,8 +35,11 @@ setup(
     'Development Status :: 5 - Production/Stable',                                         # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
     'Intended Audience :: Developers',                                                     # Define that your audience are developers
     'Topic :: Software Development :: Build Tools',
+    'Topic :: Software Development :: Libraries :: Python Modules',
     'License :: OSI Approved :: GNU General Public License (GPL)',                         # Again, pick a license
+    'Operating System :: OS Independent',
     'Programming Language :: Python :: 3',                                                 # Specify which pyhton versions that you want to support
+    'Programming Language :: Python :: 3 :: Only',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
@@ -44,5 +47,6 @@ setup(
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
   ],
 )
