@@ -40,6 +40,19 @@ class AshLogger:
         logger.addHandler(logging.StreamHandler())
         return logger
 
+    def setup_no_format_logger(self) -> object:
+        ''' It logs in a file and also prints out the same in the terminal '''
+        handler = RotatingFileHandler(
+                                os.path.join(self.file_location, self.file_name)
+                                , maxBytes=self.max_bytes
+                                , backupCount=self.max_backups
+                )
+        logger = logging.getLogger(os.path.splitext(os.path.basename(self.file_path))[0])
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(handler)
+        logger.addHandler(logging.StreamHandler())
+        return logger
+
     # @classmethod
     # def setup_basic_logger(cls, file_name : str = 'AshBasicLogger.log', file_location : str = None) -> object:
     @staticmethod
