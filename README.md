@@ -21,7 +21,7 @@ logger_obj = AshLogger(
                 , max_backups=3    # default: 1
             )
 
-logger = logger_obj.setup_logger()
+logger = logger_obj.setup_logger()    # `logger_obj.setup_basic_logger()` for no formattings like timestamps etc, in the log file after logging data.
 
 # * Testing logger
 logger.info(f'{1} info log')
