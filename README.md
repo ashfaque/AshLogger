@@ -19,6 +19,7 @@ logger_obj = AshLogger(
                 , file_location=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')    # If log file path not given, it will create a log/ dir where the calling python file is located.
                 , max_bytes=20000    # default: 1000000
                 , max_backups=3    # default: 1
+                , logger_name='app1_logger'
             )
 
 logger = logger_obj.setup_logger()    # `logger_obj.setup_basic_logger()` for no formattings like timestamps etc, in the log file after logging data.
@@ -37,6 +38,7 @@ logger.error('4 error log')
 basic_logger = AshLogger.setup_basic_logger(
                                         file_name='basic_logger_file_name.log'    # If `file_name` is not given, it will set logger file name as `AshBasicLogger.log`.
                                         , file_location=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')    # If log file path not given, it will create a log/ dir where the calling python file is located.
+                                        , logger_name='app1_logger'
                 )
 
 # * Testing basic logger

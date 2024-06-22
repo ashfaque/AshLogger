@@ -5,7 +5,7 @@ import inspect
 
 
 class AshLogger:
-    def __init__(self, file_name : str = 'AshLogger.log', file_location : str = None, max_bytes : int = 1000000 , max_backups : int = 1):
+    def __init__(self, file_name : str = 'AshLogger.log', file_location : str = None, max_bytes : int = 1000000 , max_backups : int = 1, logger_name: str = None):
         ''' This will take path of the calling python file '''
         calling_frame = inspect.currentframe().f_back
         self.file_path = inspect.getfile(calling_frame)
@@ -23,6 +23,7 @@ class AshLogger:
         self.file_location = file_location
         self.max_bytes = max_bytes
         self.max_backups = max_backups
+        self.logger_name = logger_name or os.path.splitext(os.path.basename(self.file_path))[0]
 
     def setup_logger(self) -> object:
         ''' It logs in a file and also prints out the same in the terminal '''
@@ -34,8 +35,12 @@ class AshLogger:
                 )
         handler.setFormatter(formatter)
         # logger = logging.getLogger(__name__)    # This will pick AshLogger
-        logger = logging.getLogger(os.path.splitext(os.path.basename(self.file_path))[0])
+        # logger = logging.getLogger(os.path.splitext(os.path.basename(self.file_path))[0])
+        logger = logging.getLogger(self.logger_name)
         logger.setLevel(logging.DEBUG)
+        # if not logger.handlers:
+        #     logger.addHandler(handler)
+        #     logger.addHandler(logging.StreamHandler())
         logger.addHandler(handler)
         logger.addHandler(logging.StreamHandler())
         return logger
@@ -47,8 +52,12 @@ class AshLogger:
                                 , maxBytes=self.max_bytes
                                 , backupCount=self.max_backups
                 )
-        logger = logging.getLogger(os.path.splitext(os.path.basename(self.file_path))[0])
+        # logger = logging.getLogger(os.path.splitext(os.path.basename(self.file_path))[0])
+        logger = logging.getLogger(self.logger_name)
         logger.setLevel(logging.DEBUG)
+        # if not logger.handlers:
+        #     logger.addHandler(handler)
+        #     logger.addHandler(logging.StreamHandler())
         logger.addHandler(handler)
         logger.addHandler(logging.StreamHandler())
         return logger
@@ -56,7 +65,7 @@ class AshLogger:
     # @classmethod
     # def setup_basic_logger(cls, file_name : str = 'AshBasicLogger.log', file_location : str = None) -> object:
     @staticmethod
-    def setup_basic_logger(file_name : str = 'AshBasicLogger.log', file_location : str = None) -> object:
+    def setup_basic_logger(file_name : str = 'AshBasicLogger.log', file_location : str = None, logger_name: str = None) -> object:
         ''' It only logs in a file '''
 
         ''' This will take path of the calling python file '''
@@ -83,7 +92,8 @@ class AshLogger:
             , level=logging.DEBUG
         )
         # return logging.getLogger(__name__)
-        return logging.getLogger(os.path.splitext(os.path.basename(file_path))[0])
+        # return logging.getLogger(os.path.splitext(os.path.basename(file_path))[0])
+        return logging.getLogger(logger_name or os.path.splitext(os.path.basename(file_path))[0])
 
 
 if __name__ == '__main__':
@@ -92,9 +102,12 @@ if __name__ == '__main__':
                     , file_location=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')    # If log file path not given, it will create a log/ dir where the calling python file is located.
                     , max_bytes=20000    # default: 1000000
                     , max_backups=3    # default: 1
+                    , logger_name='app1_logger'
                 )
 
     logger = logger_obj.setup_logger()
+    # * or,
+    # logger = logger_obj.setup_no_format_logger()
 
     # * Testing logger
     logger.info(f'{1} info log')
@@ -108,6 +121,7 @@ if __name__ == '__main__':
     basic_logger = AshLogger.setup_basic_logger(
                                             file_name='basic_logger_file_name.log'    # If `file_name` is not given, it will set logger file name as `AshBasicLogger.log`.
                                             , file_location=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')    # If log file path not given, it will create a log/ dir where the calling python file is located.
+                                            , logger_name='app1_logger'
                     )
 
     # * Testing basic logger
